@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b06cb7dcea9b4ac89855a12f5f5a38dc" Name="Diagram1">
+        <EntityTypeShape EntityType="BootCampDatabaseModel.Candidate" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BootCampDatabaseModel.Evaluation_Feedback" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="BootCampDatabaseModel.Interviewer" Width="1.5" PointX="6.125" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="BootCampDatabaseModel.FK_Evaluation_Feedback_Candidates" ManuallyRouted="false" />
+        <AssociationConnector Association="BootCampDatabaseModel.FK_Feedback_Interviewer_Evaluation" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

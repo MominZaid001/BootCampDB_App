@@ -1,0 +1,58 @@
+﻿@model BootCampDB_App.Models.Interviewer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Interviewer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Interviewer_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Interviewer_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone_no)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone_no)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GCM_Level)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GCM_Level)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Manager_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Manager_Id)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DasId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

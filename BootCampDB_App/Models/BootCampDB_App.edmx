@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BootCampDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Candidates">
+          <Key>
+            <PropertyRef Name="Candidate_Id" />
+          </Key>
+          <Property Name="Candidate_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Candidate_Name" Type="varchar" MaxLength="20" />
+          <Property Name="Phone_no" Type="varchar" MaxLength="10" />
+          <Property Name="Resume" Type="varchar" MaxLength="50" />
+          <Property Name="Comments" Type="varchar" MaxLength="100" />
+          <Property Name="isActive" Type="varchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="Evaluation_Feedback">
+          <Key>
+            <PropertyRef Name="Eval_id" />
+          </Key>
+          <Property Name="Eval_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Evaluator_DasId" Type="varchar" MaxLength="10" />
+          <Property Name="Candidate_Id" Type="int" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Screening_Level" Type="varchar" MaxLength="10" />
+          <Property Name="Feekback" Type="varchar" MaxLength="20" />
+          <Property Name="Comments" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Interviewer">
+          <Key>
+            <PropertyRef Name="DasId" />
+          </Key>
+          <Property Name="DasId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Interviewer_Name" Type="varchar" MaxLength="20" />
+          <Property Name="Password" Type="nchar" MaxLength="15" />
+          <Property Name="Phone_no" Type="varchar" MaxLength="10" />
+          <Property Name="GCM_Level" Type="varchar" MaxLength="10" />
+          <Property Name="Manager_Id" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_Evaluation_Feedback_Candidates">
+          <End Role="Candidates" Type="Self.Candidates" Multiplicity="0..1" />
+          <End Role="Evaluation_Feedback" Type="Self.Evaluation_Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidates">
+              <PropertyRef Name="Candidate_Id" />
+            </Principal>
+            <Dependent Role="Evaluation_Feedback">
+              <PropertyRef Name="Candidate_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedback_Interviewer_Evaluation">
+          <End Role="Interviewer" Type="Self.Interviewer" Multiplicity="0..1" />
+          <End Role="Evaluation_Feedback" Type="Self.Evaluation_Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Interviewer">
+              <PropertyRef Name="DasId" />
+            </Principal>
+            <Dependent Role="Evaluation_Feedback">
+              <PropertyRef Name="Evaluator_DasId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BootCampDatabaseModelStoreContainer">
+          <EntitySet Name="Candidates" EntityType="Self.Candidates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evaluation_Feedback" EntityType="Self.Evaluation_Feedback" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Interviewer" EntityType="Self.Interviewer" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Evaluation_Feedback_Candidates" Association="Self.FK_Evaluation_Feedback_Candidates">
+            <End Role="Candidates" EntitySet="Candidates" />
+            <End Role="Evaluation_Feedback" EntitySet="Evaluation_Feedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedback_Interviewer_Evaluation" Association="Self.FK_Feedback_Interviewer_Evaluation">
+            <End Role="Interviewer" EntitySet="Interviewer" />
+            <End Role="Evaluation_Feedback" EntitySet="Evaluation_Feedback" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BootCampDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Candidate">
+          <Key>
+            <PropertyRef Name="Candidate_Id" />
+          </Key>
+          <Property Name="Candidate_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Candidate_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Phone_no" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Resume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Evaluation_Feedback" Relationship="Self.FK_Evaluation_Feedback_Candidates" FromRole="Candidates" ToRole="Evaluation_Feedback" />
+        </EntityType>
+        <EntityType Name="Evaluation_Feedback">
+          <Key>
+            <PropertyRef Name="Eval_id" />
+          </Key>
+          <Property Name="Eval_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Evaluator_DasId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Candidate_Id" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Screening_Level" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Feekback" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Candidate" Relationship="Self.FK_Evaluation_Feedback_Candidates" FromRole="Evaluation_Feedback" ToRole="Candidates" />
+          <NavigationProperty Name="Interviewer" Relationship="Self.FK_Feedback_Interviewer_Evaluation" FromRole="Evaluation_Feedback" ToRole="Interviewer" />
+        </EntityType>
+        <EntityType Name="Interviewer">
+          <Key>
+            <PropertyRef Name="DasId" />
+          </Key>
+          <Property Name="DasId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Interviewer_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Phone_no" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="GCM_Level" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Manager_Id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Evaluation_Feedback" Relationship="Self.FK_Feedback_Interviewer_Evaluation" FromRole="Interviewer" ToRole="Evaluation_Feedback" />
+        </EntityType>
+        <Association Name="FK_Evaluation_Feedback_Candidates">
+          <End Role="Candidates" Type="Self.Candidate" Multiplicity="0..1" />
+          <End Role="Evaluation_Feedback" Type="Self.Evaluation_Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Candidates">
+              <PropertyRef Name="Candidate_Id" />
+            </Principal>
+            <Dependent Role="Evaluation_Feedback">
+              <PropertyRef Name="Candidate_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedback_Interviewer_Evaluation">
+          <End Role="Interviewer" Type="Self.Interviewer" Multiplicity="0..1" />
+          <End Role="Evaluation_Feedback" Type="Self.Evaluation_Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Interviewer">
+              <PropertyRef Name="DasId" />
+            </Principal>
+            <Dependent Role="Evaluation_Feedback">
+              <PropertyRef Name="Evaluator_DasId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BootCampDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Candidates" EntityType="Self.Candidate" />
+          <EntitySet Name="Evaluation_Feedback" EntityType="Self.Evaluation_Feedback" />
+          <EntitySet Name="Interviewers" EntityType="Self.Interviewer" />
+          <AssociationSet Name="FK_Evaluation_Feedback_Candidates" Association="Self.FK_Evaluation_Feedback_Candidates">
+            <End Role="Candidates" EntitySet="Candidates" />
+            <End Role="Evaluation_Feedback" EntitySet="Evaluation_Feedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedback_Interviewer_Evaluation" Association="Self.FK_Feedback_Interviewer_Evaluation">
+            <End Role="Interviewer" EntitySet="Interviewers" />
+            <End Role="Evaluation_Feedback" EntitySet="Evaluation_Feedback" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BootCampDatabaseModelStoreContainer" CdmEntityContainer="BootCampDatabaseEntities">
+          <EntitySetMapping Name="Candidates">
+            <EntityTypeMapping TypeName="BootCampDatabaseModel.Candidate">
+              <MappingFragment StoreEntitySet="Candidates">
+                <ScalarProperty Name="Candidate_Id" ColumnName="Candidate_Id" />
+                <ScalarProperty Name="Candidate_Name" ColumnName="Candidate_Name" />
+                <ScalarProperty Name="Phone_no" ColumnName="Phone_no" />
+                <ScalarProperty Name="Resume" ColumnName="Resume" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Evaluation_Feedback">
+            <EntityTypeMapping TypeName="BootCampDatabaseModel.Evaluation_Feedback">
+              <MappingFragment StoreEntitySet="Evaluation_Feedback">
+                <ScalarProperty Name="Eval_id" ColumnName="Eval_id" />
+                <ScalarProperty Name="Evaluator_DasId" ColumnName="Evaluator_DasId" />
+                <ScalarProperty Name="Candidate_Id" ColumnName="Candidate_Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Screening_Level" ColumnName="Screening_Level" />
+                <ScalarProperty Name="Feekback" ColumnName="Feekback" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Interviewers">
+            <EntityTypeMapping TypeName="BootCampDatabaseModel.Interviewer">
+              <MappingFragment StoreEntitySet="Interviewer">
+                <ScalarProperty Name="DasId" ColumnName="DasId" />
+                <ScalarProperty Name="Interviewer_Name" ColumnName="Interviewer_Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Phone_no" ColumnName="Phone_no" />
+                <ScalarProperty Name="GCM_Level" ColumnName="GCM_Level" />
+                <ScalarProperty Name="Manager_Id" ColumnName="Manager_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
